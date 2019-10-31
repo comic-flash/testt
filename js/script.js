@@ -34,7 +34,7 @@ var video = document.createElement("video");
 
 r.onload = function() {
     video.src = URL.createObjectURL(r.response);
-    
+    document.title="ready bruh"
    renderer.domElement.onclick=function(){
        video.play();
        var width = video.videoWidth;

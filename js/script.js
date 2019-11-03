@@ -129,10 +129,14 @@ function mouseMove(event){
         x = x*180/Math.PI;
         x /= 100000
         x *=controls.sensitivityX;
+    
+        x *=utils.deltaTime/16
         
          y = y*180/Math.PI;
         y /= 100000
         y *=controls.sensitivityY;
+    
+        y *=utils.deltaTime/16
         
         var vectorX =  new THREE.Vector3(1,0,0)
         //camera.worldToLocal(vectorX)

@@ -2,7 +2,8 @@
 
         document.addEventListener('pointerlockchange', changeCallback, false);
         document.addEventListener('mozpointerlockchange', changeCallback, false);
-        document.addEventListener('webkitpointerlockchange', changeCallback, false);      
+        document.addEventListener('webkitpointerlockchange', changeCallback, false);
+
 
 var utils={
     deltaTime:0,
@@ -197,6 +198,42 @@ camera.translateY(1)
 console.log(camera.position)
 var video = document.createElement("video");
 
+var loader = new THREE.ObjectLoader();
+
+loader.load(
+	// resource URL
+	"scene.json",
+
+	// onLoad callback
+	// Here the loaded data is assumed to be an object
+	function ( obj ) {
+		// Add the loaded object to the scene
+		scene.add( obj );
+        obj.name = "marco"
+        
+        obj.position.x=6
+        
+        obj.translateY(1.6)
+        
+        obj.scale.multiplyScalar(7)
+        console.log(obj)
+	},
+
+	// onProgress callback
+	function ( xhr ) {
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	},
+
+	// onError callback
+	function ( err ) {
+		console.error( 'An error happened' );
+	}
+);
+
+
+// Alternatively, to parse a previously loaded JSON structure
+
+
 
 
 
@@ -228,13 +265,11 @@ r.onload = function() {
        var aspectRatio = width/height;
        
        var geom = new THREE.PlaneGeometry(5*aspectRatio,5)
-       var mat = new THREE.MeshStandardMaterial()
-       mat.emissiveMap=new THREE.VideoTexture( video )
-       mat.emissiveMap.minFilter = THREE.NearestFilter;
-       mat.emissiveMap.magFilter = THREE.NearestFilter;
-       mat.emissive= new THREE.Color("white")
-       mat.metalness = 0;
-       mat.roughness = 0;
+       var mat = new THREE.MeshBasicMaterial()
+       mat.map=new THREE.VideoTexture( video )
+       mat.map.minFilter = THREE.NearestFilter;
+       mat.map.magFilter = THREE.NearestFilter;
+       
        mat.side=THREE.DoubleSide
 			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 			var plane = new THREE.Mesh( geom, mat );
@@ -254,9 +289,9 @@ r.onload = function() {
        
        
        
-       var light = new THREE.PointLight( 0xffffff, 2, 100,30);
+       var light = new THREE.PointLight( 0xffffff, 2, 40,2);
        window.light=light;
-       light.position.set(0, 15, 0 );
+       light.position.set(4, 1, 10 );
        scene.add(light)
        var h = 0;
        var animate = function () {
